@@ -1,0 +1,52 @@
+<!-- ✅ templates/fragments/footer.html -->
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<footer id="footer" class="footer dark-background" th:fragment="siteFooter">
+  <div class="footer-main">
+    <div class="container">
+      <div class="row gy-4">
+
+        <!-- Giới thiệu -->
+        <div class="col-lg-4 col-md-6">
+          <div class="footer-widget footer-about">
+            <a th:href="@{/}" class="logo">
+              <span class="sitename">TechStore</span>
+            </a>
+            <p>TechStore – Nơi mua sắm công nghệ đáng tin cậy. Chúng tôi cung cấp sản phẩm chất lượng với dịch vụ tận tâm.</p>
+
+            <div class="social-links mt-4">
+              <h5>Kết nối với chúng tôi</h5>
+              <div class="social-icons">
+                <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+                <a href="#" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+                <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hỗ trợ -->
+        <div class="col-lg-2 col-md-6 col-sm-6">
+          <div class="footer-widget">
+            <h4>Hỗ trợ</h4>
+            <ul class="footer-links">
+              <li><a th:href="@{/support}">Trung tâm trợ giúp</a></li>
+              <li><a th:href="@{/orders}">Tình trạng đơn hàng</a></li>
+              <li><a th:href="@{/shipping}">Chính sách vận chuyển</a></li>
+              <li><a th:href="@{/returns}">Đổi / Trả hàng</a></li>
+              <li><a th:href="@{/contact}">Liên hệ</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Thông tin liên hệ -->
+        <div class="col-lg-4 col-md-6">
+          <div class="footer-widget">
+            <h4>Thông tin liên hệ</h4>
+            <div class="footer-contact">
+              <div class="contact-item">
+                <i class="bi bi-geo-alt"></i>
+                <span>123 Tech Street, Quận 1, TP.HCM<

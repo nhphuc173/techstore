@@ -1,0 +1,77 @@
+<div id="product-list" th:fragment="productList">
+  <div class="row g-5">
+    <div class="col-lg-3 col-md-6" th:each="p : ${products}">
+      <div class="product-item">
+
+        <div class="product-image">
+
+          <!-- HOT -->
+          <span class="my-badge badge-hot"
+                th:if="${p.badge != null and p.badge.equalsIgnoreCase('HOT')}">
+              <i class="bi bi-fire"></i> HOT
+          </span>
+
+          <!-- NEW -->
+          <span class="my-badge badge-new"
+                th:if="${p.createdAt != null and p.createdAt.isAfter(T(java.time.LocalDateTime).now().minusDays(7))}">
+              <i class="bi bi-stars"></i> NEW
+          </span>
+
+          <!-- LIMITED -->
+          <span class="my-badge badge-limited"
+                th:if="${p.stock < 10}">
+              <i class="bi bi-exclamation-triangle-fill"></i> LIMITED
+          </span>
+
+          <img th:src="${#strings.arraySplit(p.images, ',')[0]}" class="img-fluid" loading="lazy">
+        </div>
+
+
+        <div class="product-info">
+          <div class="product-category" th:text="${p.brand.name}">Thương hiệu</div>
+
+          <h4 class="product-name">
+            <a th:href="@{'/product/' + ${p.id}}" th:text="${p.name}">Tên sản phẩm</a>
+            <!-- SALE % -->
+            <span class="sale-badge" th:if="${p.salePercent != null and p.salePercent > 0}">
+                -[[${p.salePercent}]]%
+            </span>
+          </h4>
+
+          <div class="display-tags mb-3">
+            <span class="spec-tag" th:text="${p.ram}"></span>
+
+            <span class="spec-tag"
+                  th:if="${!#lists.isEmpty(p.variants)}"
+                  th:text="${p.variants[0].storage}">
+                        </span>
+
+            <span class="spec-tag" th:text="${p.camera}"></span>
+          </div>
+
+          <div class="product-price">
+            <!-- Giá sau giảm -->
+            <span class="price-final"
+                  th:text="${#numbers.formatDecimal(p.price * (100 - p.salePercent) / 100, 0, 'COMMA', 0, 'POINT')} + ' ₫'">
+            </span>
+
+            <!-- Giá gốc (gạch ngang) -->
+            <span class="price-old"
+                  th:if="${p.salePercent > 0}"
+                  th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' ₫'">
+            </span>
+          </div>
+
+
+          <div class="buy-now mt-2 text-center">
+            <a th:href="@{'/product/' + ${p.id}}"
+               class="btn btn-primary w-100 fw-semibold">
+              <i class="bi bi-lightning-charge-fill me-1"></i> Mua ngay
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

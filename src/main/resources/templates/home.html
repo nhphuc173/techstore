@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap-icons.css}" rel="stylesheet">
+    <link th:href="@{/css/swiper-bundle.min.css}" rel="stylesheet">
+    <link th:href="@{/css/aos.css}" rel="stylesheet">
+    <link th:href="@{/css/glightbox.min.css}" rel="stylesheet">
+    <link th:href="@{/css/drift-basic.css}" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+
+<body class="index-page">
+
+<div th:replace="fragments/header :: siteHeader"></div>
+
+<main class="main">
+
+    <!-- banner đôi (carousel nhỏ mỗi cột) -->
+    <section class="double-banner container py-2">
+        <div class="row g-3">
+            <!-- Banner trái -->
+            <div class="col-lg-6">
+                <div id="bannerLeft" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="/images/banners/iphone17.webp" class="d-block w-100" alt="iPhone 17">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="/images/banners/xiaomi-15-ultra.webp" class="d-block w-100" alt="iPhone 16">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Banner phải -->
+            <div class="col-lg-6">
+                <div id="bannerRight" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="/images/banners/xiaomi-15-ultra.webp" class="d-block w-100" alt="HONOR 400 5G">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="/images/banners/xiaomi-15t-5g.webp" class="d-block w-100" alt="HONOR 400 5G alt">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="brand-section py-4">
+        <div class="container">
+            <h5 class="fw-bold mb-3">Điện thoại</h5>
+            <div class="brand-box">
+                <div class="brand-list">
+                    <div class="brand-card" th:each="brand : ${brands}" th:data-id="${brand.id}">
+                        <img th:src="@{'/images/brands/' + ${brand.logo}}" th:alt="${brand.name}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- bo loc san pham-->
+    <section class="filter-bar container py-3 border-bottom">
+        <h6 class="fw-bold mb-3">Chọn theo tiêu chí</h6>
+        <div class="row g-3 align-items-center">
+
+            <!-- RAM -->
+            <div class="col-md-3">
+                <label class="form-label mb-1">Dung lượng RAM</label>
+                <select id="filter-ram" class="form-select">
+                    <option value="">Tất cả</option>
+                    <option value="4GB">4GB</option>
+                    <option value="6GB">6GB</option>
+                    <option value="8GB">8GB</option>
+                    <option value="12GB">12GB</option>
+                    <option value="16GB">16GB</option>
+                </select>
+            </div>
+
+            <!-- ROM -->
+            <div class="col-md-3">
+                <label class="form-label mb-1">Bộ nhớ trong (ROM)</label>
+                <select id="filter-storage" class="form-select">
+                    <option value="">Tất cả</option>
+                    <option value="64GB">64GB</option>
+                    <option value="128GB">128GB</option>
+                    <option value="256GB">256GB</option>
+                    <option value="512GB">512GB</option>
+                    <option value="1TB">1TB</option>
+                </select>
+            </div>
+
+            <!-- Giá -->
+            <div class="col-md-3">
+                <label class="form-label mb-1">Mức giá</label>
+                <select id="filter-price" class="form-select">
+                    <option value="">Tất cả</option>
+                    <option value="0-5000000">Dưới 5 triệu</option>
+                    <option value="5000000-10000000">5 – 10 triệu</option>
+                    <option value="10000000-20000000">10 – 20 triệu</option>
+                    <option value="20000000-999999999">Trên 20 triệu</option>
+                </select>
+            </div>
+
+            <!-- Nút lọc -->
+            <div class="col-md-3">
+                <button class="btn btn-danger w-100 mt-4" id="applyFilters">
+                    <i class="bi bi-funnel"></i> Áp dụng bộ lọc
+                </button>
+            </div>
+
+        </div>
+
+    </section>
+    <style>
+        .filter-bar label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.filter-bar select {
+  font-size: 14px;
+  border-radius: 8px;
+}
+
+    </style>
+
+    <!-- 🟢 SECTION: SẮP XẾP SẢN PHẨM -->
+    <section class="sort-section container py-3 border-bottom">
+        <div class="container d-flex justify-content-between align-items-center flex-wrap">
+            <h6 class="fw-bold mb-2 mb-md-0">Sắp xếp sản phẩm</h6>
+            <div class="sort-buttons text-end">
+                <button class="btn btn-outline-dark sort-btn active" data-sort="default">
+                    <i class="bi bi-list"></i> Mặc định
+                </button>
+                <button class="btn btn-outline-dark sort-btn" data-sort="hot">
+                    🔥 Hot nhất
+                </button>
+                <button class="btn btn-outline-dark sort-btn" data-sort="priceAsc">
+                    <i class="bi bi-arrow-down-up"></i> Giá thấp → cao
+                </button>
+                <button class="btn btn-outline-dark sort-btn" data-sort="priceDesc">
+                    <i class="bi bi-arrow-up"></i> Giá cao → thấp
+                </button>
+                <button class="btn btn-outline-dark sort-btn" data-sort="newest">
+                    <i class="bi bi-stars"></i> Mới nhất
+                </button>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Best Sellers Section -->
+    <section id="best-sellers" class="best-sellers section">
+        <div class="container">
+            <div class="row g-5" id="product-list">
+                <!-- Lặp qua danh sách sản phẩm -->
+                <div class="col-lg-3 col-md-6" th:each="p : ${products}">
+                    <div class="product-item">
+                        <div class="product-image">
+
+                            <!-- HOT -->
+                            <span class="my-badge badge-hot"
+                                  th:if="${p.badge != null and p.badge.equalsIgnoreCase('HOT')}">
+                                <i class="bi bi-fire"></i> HOT
+                            </span>
+
+                            <!-- NEW -->
+                            <span class="my-badge badge-new"
+                                  th:if="${p.createdAt != null and p.createdAt.isAfter(T(java.time.LocalDateTime).now().minusDays(7))}">
+                                <i class="bi bi-stars"></i> NEW
+                            </span>
+
+                            <!-- LIMITED -->
+                            <span class="my-badge badge-limited"
+                                      th:if="${p.stock < 10}">
+                                <i class="bi bi-exclamation-triangle-fill"></i> LIMITED
+                            </span>
+
+                            <img th:src="${#strings.arraySplit(p.images, ',')[0]}" class="img-fluid" loading="lazy">
+                        </div>
+
+
+                        <div class="product-info">
+                            <div class="product-category" th:text="${p.brand.name}">Thương hiệu</div>
+                            <h4 class="product-name">
+                                <a th:href="@{'/product/' + ${p.id}}" th:text="${p.name}">Tên sản phẩm</a>
+                                <!-- SALE % -->
+                                <span class="sale-badge" th:if="${p.salePercent != null and p.salePercent > 0}">
+                                    -[[${p.salePercent}]]%
+                                </span>
+                            </h4>
+
+                            <div class="display-tags mb-3">
+                                <span class="spec-tag" th:text="${p.ram}"></span>
+                                <!-- Lấy ROM từ biến thể đầu tiên -->
+                                <span class="spec-tag"
+                                      th:if="${!#lists.isEmpty(p.variants)}"
+                                      th:text="${p.variants[0].storage}"></span>
+                                <span class="spec-tag" th:text="${p.camera}"></span>
+                            </div>
+
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star"></i>
+                                </div>
+                                <span class="rating-count">(24)</span>
+                            </div>
+
+                            <div class="product-price">
+                                <!-- Giá sau giảm -->
+                                <span class="price-final"
+                                      th:text="${#numbers.formatDecimal(p.price * (100 - p.salePercent) / 100, 0, 'COMMA', 0, 'POINT')} + ' ₫'">
+                                </span>
+
+                                <!-- Giá gốc (gạch ngang) -->
+                                <span class="price-old"
+                                      th:if="${p.salePercent > 0}"
+                                      th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' ₫'">
+                                </span>
+                            </div>
+
+
+                            <div class="buy-now mt-2 text-center">
+                                <a th:href="@{'/product/' + ${p.id}}" class="btn btn-primary w-100 fw-semibold">
+                                    <i class="bi bi-lightning-charge-fill me-1"></i> Mua ngay
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PHÂN TRANG -->
+            <div class="pagination d-flex justify-content-center mt-4">
+                <a th:if="${currentPage > 0}"
+                   th:href="@{/home(page=${currentPage - 1})}"
+                   class="btn btn-outline-dark me-2">«</a>
+
+                <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+        <a th:href="@{/home(page=${i})}"
+           th:text="${i + 1}"
+           th:classappend="${i == currentPage} ? 'btn btn-dark me-2' : 'btn btn-outline-dark me-2'">
+        </a>
+      </span>
+
+                <a th:if="${currentPage < totalPages - 1}"
+                   th:href="@{/home(page=${currentPage + 1})}"
+                   class="btn btn-outline-dark">»</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================= -->
+    <!-- 🟣 CÂU HỎI THƯỜNG GẶP (FAQ) -->
+    <!-- ========================= -->
+    <section id="faq" class="faq-section py-5 bg-light">
+        <div class="container">
+            <div class="section-header text-center mb-4">
+                <h2 class="fw-bold">Câu hỏi thường gặp</h2>
+                <p class="text-muted">Giải đáp những thắc mắc phổ biến khi mua sắm tại TechStore</p>
+            </div>
+
+            <div class="accordion" id="faqAccordion">
+
+                <!-- Câu hỏi 1 -->
+                <div class="accordion-item mb-3">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button fw-semibold" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Có nên mua điện thoại trả góp không? Lợi ích và rủi ro?
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                         data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Tùy theo ngân sách cá nhân bạn có thể quyết định phù hợp hơn cho mình. Khi mua trả góp có thể giúp bạn
+                            <strong>sở hữu điện thoại ngay lập tức mà không cần trả toàn bộ số tiền ban đầu</strong>,
+                            một số nơi hiện nay đang có chương trình 0% lãi suất hỗ trợ người dùng.
+                            Tuy nhiên, cũng cần lưu ý các rủi ro như chi phí cao và áp lực tài chính nếu không quản lý dòng tiền tốt.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Câu hỏi 2 -->
+                <div class="accordion-item mb-3">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Nên mua iPhone hay điện thoại Android? Ưu nhược điểm của từng loại?
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                         data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Việc mua iPhone hay Android phụ thuộc nhiều vào nhu cầu và sở thích mỗi người.
+                            <strong>iPhone nổi bật hơn với sự ổn định, hiệu năng tối ưu và hệ sinh thái đồng bộ.</strong>
+                            Ngược lại, <strong>Android cung cấp sự đa dạng</strong>, khả năng tùy biến và giá thành linh hoạt hơn.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Câu hỏi 3 -->
+                <div class="accordion-item mb-3">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Điện thoại nào có pin "trâu" nhất, dùng được lâu nhất?
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                         data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Các dòng điện thoại như <strong>Samsung Galaxy M, Xiaomi Redmi, và iPhone 15 Pro Max</strong>
+                            hiện được đánh giá cao nhờ pin lớn, tối ưu năng lượng tốt và hỗ trợ sạc nhanh.
+                            Ngoài ra, thói quen sử dụng và nhiệt độ môi trường cũng ảnh hưởng đến tuổi thọ pin.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Câu hỏi 4 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingFour">
+                        <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            Điện thoại nào chơi game mượt nhất hiện nay?
+                        </button>
+                    </h2>
+                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                         data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Những mẫu như <strong>Asus ROG Phone, iPhone 15 Pro, Xiaomi 15 Ultra</strong>
+                            hay <strong>Samsung Galaxy S24 Ultra</strong> có hiệu năng cực mạnh nhờ chip cao cấp,
+                            tản nhiệt tốt và màn hình tần số quét cao, đáp ứng nhu cầu chơi game nặng như PUBG, Genshin Impact,...
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- /Best Sellers Section -->
+
+</main>
+
+<div th:replace="fragments/footer :: siteFooter"></div>
+
+<!-- Vendor JS Files -->
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/swiper-bundle.min.js}"></script>
+<script th:src="@{/js/aos.js}"></script>
+<script th:src="@{/js/glightbox.min.js}"></script>
+<script th:src="@{/js/Drift.min.js}"></script>
+<script th:src="@{/js/purecounter_vanilla.js}"></script>
+
+
+
+<!-- Main JS File -->
+<script th:src="@{/js/main.js}"></script>
+<script th:src="@{/js/style.js}"></script>
+
+</body>
+</html>
