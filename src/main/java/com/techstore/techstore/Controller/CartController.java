@@ -98,13 +98,31 @@ public class CartController {
                              @RequestParam String action,
                              @RequestParam(required = false) Integer quantity) {
 
+
         cartItemRepository.findById(itemId).ifPresent(item -> {
             int current = item.getQuantity();
+            ProductVariant variant = item.getVariant();
+            int stock = variant != null ? variant.getStock() : 0;
 
-            if ("increase".equals(action)) item.setQuantity(current + 1);
-            else if ("decrease".equals(action) && current > 1) item.setQuantity(current - 1);
-            else if (quantity != null && quantity > 0) item.setQuantity(quantity);
+            // 👉 Tăng số lượng
+            if ("increase".equals(action)) {
+                if (current < stock) {
+                    item.setQuantity(current + 1);
+                }
+            }
 
+            // 👉 Giảm số lượng
+            else if ("decrease".equals(action)) {
+                if (current > 1) {
+                    item.setQuantity(current - 1);
+                }
+            }
+
+            // 👉 Nhập số lượng trực tiếp
+            else if (quantity != null && quantity > 0) {
+                if (quantity <= stock) item.setQuantity(quantity);
+                else item.setQuantity(stock); // 🚨 Không vượt tồn kho
+            }
             item.recalc();
 
             Cart cart = item.getCart();

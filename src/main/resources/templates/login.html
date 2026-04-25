@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Login - TechStore</title>
+    <title>Đăng nhập - TechStore</title>
 
     <!-- Favicons -->
     <link th:href="@{/img/favicon.png}" rel="icon">
@@ -106,7 +106,7 @@
 
                 <div class="form-header text-center mb-4">
                     <h3>Welcome Back 👋</h3>
-                    <p>Please sign in to continue</p>
+                    <p>Đăng nhập để tiếp tục</p>
                 </div>
 
                 <p th:if="${success}" class="text-success text-center" th:text="${success}"></p>
@@ -126,19 +126,19 @@
 
                     <!-- ⭐ Thêm dòng "Forgot password?" -->
                     <div class="forgot text-end mb-3">
-                        <a th:href="@{/forgot-password}">Forgot your password?</a>
+                        <a th:href="@{/forgot-password}">Quên mật khẩu?</a>
                     </div>
 
                     <button type="submit" class="auth-btn mb-3">
-                        Sign In <i class="bi bi-arrow-right"></i>
+                        Đăng nhập <i class="bi bi-arrow-right"></i>
                     </button>
 
                     <p th:if="${param.error}" class="text-danger text-center">Sai tài khoản hoặc mật khẩu!</p>
                     <p th:if="${param.logout}" class="text-success text-center">Bạn đã đăng xuất thành công!</p>
 
                     <div class="switch-form text-center mt-3">
-                        <span>Don’t have an account?</span>
-                        <a th:href="@{/register}">Create account</a>
+                        <span>Tạo tài khoản mới?</span>
+                        <a th:href="@{/register}">Tạo mới</a>
                     </div>
                 </form>
 

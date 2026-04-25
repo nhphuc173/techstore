@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -30,11 +31,15 @@ public class AdminDashboardController {
 
     // ===================== DASHBOARD =====================
     @GetMapping
-    public String dashboard(Model model) {
+    public String dashboard(@RequestParam(defaultValue = "7") int range, Model model) {
 
         // 🔵 1. Doanh thu hôm nay
         BigDecimal todayRevenue = orderService.getRevenueByDate(LocalDate.now());
         model.addAttribute("todayRevenue", todayRevenue);
+
+        double conversionRate = orderService.getConversionRate();
+        model.addAttribute("conversionRate", conversionRate);
+
 
         // 🔵 2. Số đơn hàng mới hôm nay
         int newOrders = orderService.countOrdersByDate(LocalDate.now());
@@ -51,23 +56,33 @@ public class AdminDashboardController {
         // ============================================================
         // 🔵 5. DOANH THU 7 NGÀY GẦN NHẤT (biểu đồ đường)
         // ============================================================
+
+        // Giới hạn input
+        if (range != 7 && range != 30 && range != 90) {
+            range = 7;
+        }
+
+        // ============================================================
+        // Doanh thu N ngày gần nhất
+        // ============================================================
+
         List<String> labels = new ArrayList<>();
         List<BigDecimal> revenues = new ArrayList<>();
 
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM");
         LocalDate today = LocalDate.now();
 
-        for (int i = 6; i >= 0; i--) { // 7 ngày
+        for (int i = range - 1; i >= 0; i--) {
             LocalDate day = today.minusDays(i);
 
-            labels.add(day.format(fmt));   // Ví dụ: 09/11, 10/11,...
+            labels.add(day.format(fmt));
 
             BigDecimal rev = orderService.getRevenueByDate(day);
             revenues.add(rev != null ? rev : BigDecimal.ZERO);
         }
-
         model.addAttribute("dailyLabels", labels);
         model.addAttribute("dailyRevenue", revenues);
+        model.addAttribute("range", range);
         // ============================================================
 
 

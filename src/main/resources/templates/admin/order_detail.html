@@ -90,9 +90,6 @@
         <p><strong>Trạng thái:</strong>
           <span th:text="${order.payment.status}"></span>
         </p>
-        <p><strong>Mã giao dịch:</strong>
-          <span th:text="${order.payment.transactionId != null ? order.payment.transactionId : 'Không có'}"></span>
-        </p>
         <p><strong>Số tiền thanh toán:</strong>
           <span th:text="${#numbers.formatDecimal(order.payment.amount, 0, 'COMMA', 0, 'POINT')} + ' ₫'"></span>
         </p>

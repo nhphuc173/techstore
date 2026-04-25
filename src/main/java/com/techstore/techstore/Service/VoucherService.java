@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,6 +44,16 @@ public class VoucherService {
     }
     public List<Voucher> getAvailableVouchers(Long userId) {
         return voucherRepository.findAllAvailable(); // active = true, quantity > 0, trong thời gian
+    }
+
+    public void autoUpdateStatus(Voucher v) {
+        LocalDateTime now = LocalDateTime.now();
+
+        if (v.getEndDate() != null && v.getEndDate().isBefore(now)) {
+            v.setActive(false);
+        } else {
+            v.setActive(true);
+        }
     }
 
 }

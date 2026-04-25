@@ -20,7 +20,7 @@ public class Payment {
 
     // 🔹 Liên kết với Order
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id", nullable = false)
+    @JoinColumn(name = "order_id", nullable = false,  unique = false)
     private Order order;
 
     // 🔹 Phương thức thanh toán (COD, MOMO,...)
@@ -37,9 +37,6 @@ public class Payment {
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal amount;
 
-    // 🔹 Mã giao dịch (từ MoMo, VNPay,...)
-    @Column(length = 100, unique = true)
-    private String transactionId;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -62,8 +59,6 @@ public class Payment {
     public BigDecimal getAmount() { return amount; }
     public void setAmount(BigDecimal amount) { this.amount = amount; }
 
-    public String getTransactionId() { return transactionId; }
-    public void setTransactionId(String transactionId) { this.transactionId = transactionId; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }
@@ -87,7 +82,6 @@ public class Payment {
                 ", method=" + method +
                 ", status=" + status +
                 ", amount=" + amount +
-                ", transactionId='" + transactionId + '\'' +
                 '}';
     }
 }

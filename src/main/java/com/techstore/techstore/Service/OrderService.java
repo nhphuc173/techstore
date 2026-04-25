@@ -120,15 +120,15 @@
 
             // 💳 Tạo bản ghi Payment
             Payment payment = new Payment();
-            payment.setOrder(order);
             payment.setAmount(total);
             payment.setMethod(paymentMethod);
             payment.setStatus(PaymentStatus.PENDING);
             payment.setCreatedAt(LocalDateTime.now());
-            order.setPayment(payment);
+            order.setPayment(payment);      // đã set ngược Payment → Order
+            payment.setOrder(order);        // đảm bảo Hibernate biết rõ
+
 
             Order saved = orderRepository.save(order);
-            paymentRepository.save(payment);
 
             // 🧹 Xóa giỏ
             cartItemRepository.deleteAll(cart.getItems());
@@ -212,15 +212,15 @@
 
             // 💳 Tạo payment
             Payment payment = new Payment();
-            payment.setOrder(order);
             payment.setAmount(total);
             payment.setMethod(paymentMethod);
             payment.setStatus(PaymentStatus.PENDING);
             payment.setCreatedAt(LocalDateTime.now());
-            order.setPayment(payment);
+            order.setPayment(payment);      // đã set ngược Payment → Order
+            payment.setOrder(order);        // đảm bảo Hibernate biết rõ
+
 
             Order savedOrder = orderRepository.save(order);
-            paymentRepository.save(payment);
 
             return savedOrder;
         }
@@ -284,6 +284,16 @@
             orderRepository.save(order);
         }
 
+        public double getConversionRate() {
+            long totalOrders = orderRepository.count();
+            long successfulOrders = orderRepository.countByOrderStatus("Delivered"); // hoặc Paid
+
+            if (totalOrders == 0) return 0;
+
+            return (successfulOrders * 100.0) / totalOrders;
+        }
+
+
 
         // ===========================
         // 🔹 CRUD
@@ -329,5 +339,10 @@
             int random = (int)(Math.random() * 9000) + 1000; // random 4 số
             return "DH" + date + "-" + random;
         }
+
+        public List<Order> findOrdersBetweenDates(LocalDateTime start, LocalDateTime end) {
+            return orderRepository.findOrdersBetweenDates(start, end);
+        }
+
 
     }

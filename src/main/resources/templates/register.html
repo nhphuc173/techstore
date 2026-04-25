@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Register - TechStore</title>
+  <title>Đăng kí - TechStore</title>
 
   <!-- CSS -->
   <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
@@ -77,8 +77,8 @@
 
         <!-- Title -->
         <div class="text-center mb-4">
-          <h1 class="text-white">Create Account</h1>
-          <p class="text-light">Join TechStore and start shopping today!</p>
+          <h1 class="text-white">Đăng kí</h1>
+          <p class="text-light">Truy cập để mua sắm ngay!</p>
         </div>
 
         <!-- Register Container -->
@@ -89,30 +89,30 @@
             <!-- Full Name -->
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Full Name" required>
-              <label for="fullName">Full Name</label>
+              <label for="fullName">Họ tên</label>
             </div>
 
             <!-- Username -->
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
-              <label for="username">Username</label>
+              <label for="username">Tên tài khoản</label>
             </div>
 
             <!-- Email -->
             <div class="form-floating mb-3">
               <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-              <label for="email">Email Address</label>
+              <label for="email">Email</label>
             </div>
 
             <!-- Password -->
             <div class="form-floating mb-4">
               <input type="password" class="form-control" id="password" name="password" placeholder="Password" required minlength="6">
-              <label for="password">Password</label>
+              <label for="password">Mật khẩu</label>
             </div>
 
             <!-- Submit -->
             <button type="submit" class="btn-submit w-100 mb-3">
-              Create Account
+              Đăng kí
             </button>
 
             <!-- Message -->
@@ -120,8 +120,8 @@
 
             <!-- Redirect Link -->
             <p class="text-center mt-2">
-              Already have an account?
-              <a th:href="@{/login}" class="fw-semibold">Sign in here</a>
+              Đã có tài khoản?
+              <a th:href="@{/login}" class="fw-semibold">Đăng nhập ngay</a>
             </p>
           </form>
 

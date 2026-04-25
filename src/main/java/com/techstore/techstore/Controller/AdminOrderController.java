@@ -4,10 +4,12 @@ import com.techstore.techstore.Service.OrderService;
 import com.techstore.techstore.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -87,5 +89,27 @@ public class AdminOrderController {
 
         return "admin/orders";
     }
+
+    @GetMapping("/filter-date")
+    public String filterOrdersByDate(
+            @RequestParam("start") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate start,
+            @RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end,
+            Model model
+    ) {
+        List<Order> orders = orderService.findOrdersBetweenDates(
+                start.atStartOfDay(),
+                end.plusDays(1).atStartOfDay()
+        );
+
+        model.addAttribute("orders", orders);
+        model.addAttribute("searchMode", true);
+        model.addAttribute("start", start);
+        model.addAttribute("end", end);
+        model.addAttribute("active", "orders");  // ⭐ thêm để sidebar highlight đúng
+
+        return "admin/orders"; // ⭐ sửa lại đúng view
+    }
+
+
 
 }

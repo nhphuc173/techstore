@@ -115,6 +115,18 @@
                 <i class="bi bi-box-seam stat-icon"></i>
             </div>
         </div>
+
+        <div class="col-md-3">
+            <div class="stat-card" style="background:linear-gradient(135deg,#6f42c1,#4b2a86);">
+                <h6>Tỷ lệ chuyển đổi</h6>
+                <h3 class="fw-bold"
+                    th:text="${conversionRate != null ? #numbers.formatDecimal(conversionRate, 1, 'POINT', 1, 'POINT') + '%': '0%'}"
+
+                </h3>
+                <i class="bi bi-bar-chart-steps stat-icon"></i>
+            </div>
+        </div>
+
     </div>
 
     <!-- CHARTS ROW -->
@@ -123,10 +135,25 @@
         <!-- MONTHLY REVENUE CHART -->
         <div class="col-lg-8">
             <div class="chart-box">
-                <h5 class="fw-bold mb-3">📊 Doanh thu 7 ngày gần nhất</h5>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="fw-bold">📊 Doanh thu gần đây</h5>
+
+                    <form method="get" id="rangeForm">
+                        <select name="range" class="form-select form-select-sm"
+                                onchange="document.getElementById('rangeForm').submit()">
+                            <option value="7" th:selected="${range == 7}">7 ngày</option>
+                            <option value="30" th:selected="${range == 30}">30 ngày</option>
+                            <option value="90" th:selected="${range == 90}">90 ngày</option>
+                        </select>
+                    </form>
+                </div>
+
+                <!-- 🎯 PHẦN NÀY BẠN ĐANG THIẾU -->
                 <canvas id="dailyChart" height="140"></canvas>
+
             </div>
         </div>
+
 
         <!-- BEST SELLERS -->
         <div class="col-lg-4">

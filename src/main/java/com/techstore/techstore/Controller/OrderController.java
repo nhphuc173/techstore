@@ -67,4 +67,11 @@ public class OrderController {
         model.addAttribute("pageTitle", "Đặt hàng thành công – TechStore");
         return "order_success"; // ↔ templates/order_success.html
     }
+
+    @GetMapping("/expired")
+    public String orderExpired(@RequestParam Long orderId) {
+        orderService.updateStatus(orderId, "Expired");
+        return "order_expired";
+    }
+
 }

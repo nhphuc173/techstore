@@ -18,6 +18,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     Optional<Order> findByOrderCode(String orderCode);
 
+    long countByOrderStatus(String status);
+
+
     List<Order> findByUser_IdOrderByCreatedAtDesc(Long userId);
 
     // Lấy chi tiết 1 đơn: kèm items + product để render Thymeleaf không bị lazy
@@ -42,6 +45,10 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Query("SELECT SUM(o.totalAmount) FROM Order o WHERE o.createdAt >= :start AND o.createdAt < :end AND o.orderStatus = 'Completed'")
     BigDecimal sumRevenueByDate(LocalDateTime start, LocalDateTime end);
+
+    @Query("SELECT o FROM Order o WHERE o.createdAt >= :start AND o.createdAt < :end ORDER BY o.createdAt DESC")
+    List<Order> findOrdersBetweenDates(@Param("start") LocalDateTime start,
+                                       @Param("end") LocalDateTime end);
 
 
 }

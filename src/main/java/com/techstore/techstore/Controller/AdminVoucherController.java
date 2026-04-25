@@ -23,11 +23,19 @@ public class AdminVoucherController {
     @GetMapping
     public String listVouchers(Model model) {
         List<Voucher> vouchers = voucherService.getAll();
+
+        vouchers.forEach(v -> {
+            voucherService.autoUpdateStatus(v);
+            voucherService.save(v);
+        });
         model.addAttribute("vouchers", vouchers);
         model.addAttribute("pageTitle", "Quản lý Voucher - TechStore Admin");
         model.addAttribute("active", "vouchers");
         return "admin/vouchers";
     }
+
+
+
 
     /** 🔹 Thêm voucher mới */
     @PostMapping("/add")

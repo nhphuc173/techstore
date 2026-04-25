@@ -166,6 +166,7 @@ public class CheckoutController {
             return "redirect:/checkout/sepay?orderId=" + order.getId();
         }
 
+        System.out.println("PLACE ORDER RUN at " + System.currentTimeMillis());
         return "redirect:/orders/success";
 
     }

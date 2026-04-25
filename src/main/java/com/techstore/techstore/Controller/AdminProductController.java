@@ -71,6 +71,7 @@ public class AdminProductController {
             @RequestParam(required = false, defaultValue = "0") Integer salePercent,
             @RequestParam(required = false) MultipartFile[] imageFiles,
             @RequestParam(required = false) MultipartFile[] variantImages,
+            @RequestParam(required = false) String origin,
             HttpServletRequest request
     ) throws IOException {
 
@@ -86,6 +87,7 @@ public class AdminProductController {
         p.setBrand(brand);
         p.setBadge(badge);
         p.setSalePercent(salePercent);
+        p.setOrigin(origin);
 
 
 

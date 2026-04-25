@@ -90,11 +90,14 @@ public class Product {
     @Column(name = "badge")
     private String badge; // HOT / NEW / SALE...
 
+    @Column(length = 150)
+    private String origin; // Nguồn nhập hàng (ví dụ: Nhật, Mỹ, Chính hãng VN, Nhập khẩu)
+
 
 
     public Product() {}
 
-    public Product(Long id, String name, String model, BigDecimal price, Integer stock, String description, String images, String ram, String display, String camera, String battery, String dimensions, String material, LocalDateTime createdAt, LocalDateTime updatedAt, boolean isDeleted, Brand brand, List<ProductVariant> variants) {
+    public Product(Long id, String name, String model, BigDecimal price, Integer stock, String description, String images, String ram, String display, String camera, String battery, String dimensions, String material, LocalDateTime createdAt, LocalDateTime updatedAt, boolean isDeleted, Brand brand, List<ProductVariant> variants, Integer salePercent, String badge, String origin) {
         this.id = id;
         this.name = name;
         this.model = model;
@@ -113,6 +116,9 @@ public class Product {
         this.isDeleted = isDeleted;
         this.brand = brand;
         this.variants = variants;
+        this.salePercent = salePercent;
+        this.badge = badge;
+        this.origin = origin;
     }
 
     // ===============================================================
@@ -150,7 +156,13 @@ public class Product {
         }
     }
 
+    public String getOrigin() {
+        return origin;
+    }
 
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
 
     // ✅ Getter / Setter
     public Long getId() { return id; }
